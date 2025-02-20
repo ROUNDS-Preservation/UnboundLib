@@ -90,7 +90,7 @@ namespace Unbound.Core {
         }
 
         IEnumerator BanPlayer() {
-            while(!SteamManager.initialized) {
+            while(!SteamManager.Initialized) {
                 yield return null;
             }
 
