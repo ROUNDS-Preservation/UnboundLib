@@ -66,12 +66,12 @@ namespace Unbound.Gamemodes {
                 }
             }
 
-            // get new playerIDs
+            // get new PlayerIDs
             Dictionary<Player, int> newPlayerIDs = new Dictionary<Player, int>();
-            int playerID = 0;
-            foreach(Player player in remainingPlayers.OrderBy(p => p.playerID)) {
-                newPlayerIDs[player] = playerID;
-                playerID++;
+            int PlayerID = 0;
+            foreach(Player player in remainingPlayers.OrderBy(p => p.PlayerID)) {
+                newPlayerIDs[player] = PlayerID;
+                PlayerID++;
             }
 
             // fix cardbars by reassigning CardBarHandler.cardBars
@@ -81,42 +81,42 @@ namespace Unbound.Gamemodes {
             newCardBars.AddRange(
                 from p in newPlayerIDs.Keys
                 orderby newPlayerIDs[p]
-                select cardBars[p.playerID]
+                select cardBars[p.PlayerID]
             );
             CardBarHandler.instance.SetFieldValue("cardBars", newCardBars.ToArray());
 
-            // reassign playerIDs
+            // reassign PlayerIDs
             foreach(Player player in newPlayerIDs.Keys) {
                 player.AssignPlayerID(newPlayerIDs[player]);
             }
 
-            // reassign teamIDs
+            // reassign TeamIDs
             Dictionary<int, List<Player>> teams = new Dictionary<int, List<Player>>();
-            foreach(Player player in remainingPlayers.OrderBy(p => p.teamID).ThenBy(p => p.playerID)) {
-                if(!teams.ContainsKey(player.teamID)) { teams[player.teamID] = new List<Player>() { }; }
+            foreach(Player player in remainingPlayers.OrderBy(p => p.TeamID).ThenBy(p => p.PlayerID)) {
+                if(!teams.ContainsKey(player.TeamID)) { teams[player.TeamID] = new List<Player>() { }; }
 
-                teams[player.teamID].Add(player);
+                teams[player.TeamID].Add(player);
             }
 
-            int teamID = 0;
+            int TeamID = 0;
             foreach(int oldID in teams.Keys) {
                 foreach(Player player in teams[oldID]) {
-                    player.AssignTeamID(teamID);
+                    player.AssignTeamID(TeamID);
                 }
-                teamID++;
+                TeamID++;
             }
 
             PlayerManager.instance.players = remainingPlayers.ToList();
 
             // count number of unique teams remaining as well as the number of unique clients, if either are equal to 1, the game is borked
-            if(GameManager.instance.isPlaying && (PlayerManager.instance.players.Select(p => p.teamID).Distinct().Count() <= 1 || PlayerManager.instance.players.Select(p => p.data.view.ControllerActorNr).Distinct().Count() <= 1)) {
+            if(GameManager.instance.isPlaying && (PlayerManager.instance.players.Select(p => p.TeamID).Distinct().Count() <= 1 || PlayerManager.instance.players.Select(p => p.data.view.ControllerActorNr).Distinct().Count() <= 1)) {
                 UnboundCore.Instance.StartCoroutine((IEnumerator)NetworkConnectionHandler.instance.InvokeMethod("DoDisconnect", "DISCONNECTED", "TOO MANY DISCONNECTS"));
             }
         }
 
-        public abstract TeamScore GetTeamScore(int teamID);
+        public abstract TeamScore GetTeamScore(int TeamID);
 
-        public abstract void SetTeamScore(int teamID, TeamScore score);
+        public abstract void SetTeamScore(int TeamID, TeamScore score);
 
         public abstract void SetActive(bool active);
 

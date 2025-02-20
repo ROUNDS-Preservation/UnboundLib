@@ -65,14 +65,14 @@ namespace RWF.Patches
             if (numReady == numPlayers && numReady >= RWFMod.instance.MinPlayers) {
                 MainMenuHandler.instance.Close();
 
-                // assign teamIDs according to colorIDs
+                // assign TeamIDs according to colorIDs
                 int nextTeamID = 0;
                 Dictionary<int, int> colorToTeam = new Dictionary<int, int>() { };
                 foreach (Player player in PlayerManager.instance.players)
                 {
-                    if (colorToTeam.TryGetValue(player.colorID(), out int teamID))
+                    if (colorToTeam.TryGetValue(player.colorID(), out int TeamID))
                     {
-                        player.AssignTeamID(teamID);
+                        player.AssignTeamID(TeamID);
                     }
                     else
                     {
@@ -118,7 +118,7 @@ namespace RWF.Patches
         static bool Prefix(CharacterSelectionInstance __instance, Player pickingPlayer, ref HoverEvent[] ___buttons, ref HoverEvent ___currentButton, ref float ___counter)
         {
             __instance.currentPlayer = pickingPlayer;
-            __instance.currentlySelectedFace = PlayerPrefs.GetInt("SelectedFace" + pickingPlayer.playerID);
+            __instance.currentlySelectedFace = PlayerPrefs.GetInt("SelectedFace" + pickingPlayer.PlayerID);
             try
             {
                 __instance.GetComponentInChildren<GeneralParticleSystem>(true).gameObject.SetActive(false);
@@ -261,13 +261,13 @@ namespace RWF.Patches
                 // change team
                 if (__instance.currentPlayer.data.playerActions.GetAdditionalData().increaseColorID.WasPressed)
                 {
-                    //newTeamID = UnityEngine.Mathf.Clamp(__instance.currentPlayer.teamID + 1, 0, RWFMod.MaxTeamsHardLimit - 1);
+                    //newTeamID = UnityEngine.Mathf.Clamp(__instance.currentPlayer.TeamID + 1, 0, RWFMod.MaxTeamsHardLimit - 1);
                     colorIDDelta = +1;
                     colorChanged = true;
                 }
                 else if (__instance.currentPlayer.data.playerActions.GetAdditionalData().decreaseColorID.WasPressed)
                 {
-                    //newTeamID = UnityEngine.Mathf.Clamp(__instance.currentPlayer.teamID - 1, 0, RWFMod.MaxTeamsHardLimit - 1);
+                    //newTeamID = UnityEngine.Mathf.Clamp(__instance.currentPlayer.TeamID - 1, 0, RWFMod.MaxTeamsHardLimit - 1);
                     colorIDDelta = -1;
                     colorChanged = true;
                 }
@@ -292,7 +292,7 @@ namespace RWF.Patches
                     if (!fail)
                     {
                         // update player preferences
-                        PlayerPrefs.SetInt(RWFMod.GetCustomPropertyKey("PreferredColor" + __instance.currentPlayer.playerID.ToString()), newColorID);
+                        PlayerPrefs.SetInt(RWFMod.GetCustomPropertyKey("PreferredColor" + __instance.currentPlayer.PlayerID.ToString()), newColorID);
 
                         __instance.currentPlayer.AssignColorID(newColorID);
                         __instance.currentPlayer.SetColors();

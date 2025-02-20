@@ -23,7 +23,7 @@ namespace Unbound.Patches {
         }
 
         static void AssignColorID(CharacterData characterData) {
-            characterData.player.AssignColorID(characterData.player.teamID);
+            characterData.player.AssignColorID(characterData.player.TeamID);
         }
 
         static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions) {

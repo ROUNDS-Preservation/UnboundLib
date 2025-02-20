@@ -805,11 +805,11 @@ namespace RWF
 
             Dictionary<int, int> colorToTeam = new Dictionary<int, int>() { };
 
-            // assign teamIDs according to colorIDs, in a random order
+            // assign TeamIDs according to colorIDs, in a random order
             int nextTeamID = 0;
             foreach (LobbyCharacter player in this.PrivateRoomCharacters.OrderBy(_ => UnityEngine.Random.Range(0f,1f)))
             {
-                if (colorToTeam.TryGetValue(player.colorID, out int teamID))
+                if (colorToTeam.TryGetValue(player.colorID, out int TeamID))
                 {
                 }
                 else
@@ -821,7 +821,7 @@ namespace RWF
 
             yield return this.SyncMethod(nameof(PrivateRoomHandler.AssignTeamIDs), null, colorToTeam);
 
-            foreach (var player in this.PrivateRoomCharacters.OrderBy(p => p.teamID).ThenBy(_ => UnityEngine.Random.Range(0f,1f)))
+            foreach (var player in this.PrivateRoomCharacters.OrderBy(p => p.TeamID).ThenBy(_ => UnityEngine.Random.Range(0f,1f)))
             {
                 yield return this.SyncMethod(nameof(PrivateRoomHandler.CreatePlayer), player.actorID, player);
             }
@@ -835,11 +835,11 @@ namespace RWF
         {
             LobbyCharacter[] localCharacters = PhotonNetwork.LocalPlayer.GetProperty<LobbyCharacter[]>("players");
 
-            // assign teamIDs according to colorIDs
+            // assign TeamIDs according to colorIDs
             for (int localID = 0; localID < localCharacters.Count(); localID++)
             {
                 if (localCharacters[localID] == null) { continue; }
-                localCharacters[localID].teamID = colorIDtoTeamID[localCharacters[localID].colorID];
+                localCharacters[localID].TeamID = colorIDtoTeamID[localCharacters[localID].colorID];
             }
 
             PhotonNetwork.LocalPlayer.SetProperty("players", localCharacters);

@@ -83,14 +83,14 @@ namespace RWF.Patches
     class Player_Patch_AssignTeamID
     {
         static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions) {
-            // Somewhy the AssignTeamID method assigns playerID to teamID when player joins a room the second time
-            var f_playerID = ExtensionMethods.GetFieldInfo(typeof(Player), "playerID");
-            var f_teamID = ExtensionMethods.GetFieldInfo(typeof(Player), "teamID");
+            // Somewhy the AssignTeamID method assigns PlayerID to TeamID when player joins a room the second time
+            var f_PlayerID = ExtensionMethods.GetFieldInfo(typeof(Player), "PlayerID");
+            var f_TeamID = ExtensionMethods.GetFieldInfo(typeof(Player), "TeamID");
 
             foreach (var ins in instructions) {
-                if (ins.LoadsField(f_playerID)) {
-                    // Instead of `this.teamID = playerID`, we obviously want `this.teamID = teamID`
-                    ins.operand = f_teamID;
+                if (ins.LoadsField(f_PlayerID)) {
+                    // Instead of `this.TeamID = PlayerID`, we obviously want `this.TeamID = TeamID`
+                    ins.operand = f_TeamID;
                 }
 
                 yield return ins;

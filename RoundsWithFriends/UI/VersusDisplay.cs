@@ -34,16 +34,16 @@ namespace RWF
 
         private int UniqueIDToTeamID(int uniqueID)
         {
-            bool exists = this._uniqueToTeam.TryGetValue(uniqueID, out int teamID);
+            bool exists = this._uniqueToTeam.TryGetValue(uniqueID, out int TeamID);
             if (!exists)
             {
                 this._uniqueToTeam[uniqueID] = PrivateRoomHandler.instance.FindLobbyCharacter(uniqueID).colorID;
             }
             return this._uniqueToTeam[uniqueID];
         }
-        private void SetUniqueIDToTeamID(int uniqueID, int teamID)
+        private void SetUniqueIDToTeamID(int uniqueID, int TeamID)
         {
-            this._uniqueToTeam[uniqueID] = teamID;
+            this._uniqueToTeam[uniqueID] = TeamID;
         }
 
         internal int PlayerVisualColorID(int uniqueID)
@@ -73,14 +73,14 @@ namespace RWF
 
         }
 
-        internal GameObject TeamGroupGO(int teamID, int colorID, bool force_update = false)
+        internal GameObject TeamGroupGO(int TeamID, int colorID, bool force_update = false)
         {
-            bool exists = this._teamGroupGOs.TryGetValue(teamID, out GameObject teamGroupGO);
+            bool exists = this._teamGroupGOs.TryGetValue(TeamID, out GameObject teamGroupGO);
             if (!exists)
             {
-                teamGroupGO = new GameObject($"Team {teamID}");
+                teamGroupGO = new GameObject($"Team {TeamID}");
                 teamGroupGO.transform.SetParent(this.transform);
-                teamGroupGO.transform.SetSiblingIndex(teamID);
+                teamGroupGO.transform.SetSiblingIndex(TeamID);
                 teamGroupGO.transform.localScale = Vector3.one;
 
                 teamGroupGO.AddComponent<RectTransform>().pivot = new Vector2(0.5f, 0.1f);
@@ -92,7 +92,7 @@ namespace RWF
                 layoutGroup.childAlignment = TextAnchor.MiddleCenter;
                 layoutGroup.spacing = 50f;
 
-                var teamGo = new GameObject($"TeamName {teamID}");
+                var teamGo = new GameObject($"TeamName {TeamID}");
                 teamGo.transform.SetParent(teamGroupGO.transform);
                 teamGo.transform.localScale = Vector3.one;
                 teamGo.transform.SetAsFirstSibling();
@@ -152,7 +152,7 @@ namespace RWF
                 teamNameGo.transform.localScale = Vector3.one;
                 teamNameGo.transform.SetAsFirstSibling();
 
-                this._teamGroupGOs[teamID] = teamGroupGO;
+                this._teamGroupGOs[TeamID] = teamGroupGO;
             }
 
             if (force_update || !exists || teamGroupGO.transform.GetChild(0).GetChild(0).GetComponentInChildren<GeneralParticleSystem>().particleSettings.color != PlayerSkinBank.GetPlayerSkinColors(colorID).winText)
@@ -239,14 +239,14 @@ namespace RWF
 
             List<LobbyCharacter> players = PhotonNetwork.CurrentRoom.Players.Select(kv => kv.Value.GetProperty<LobbyCharacter[]>("players")).SelectMany(p => p).Where(p => p != null && this.PlayerSelectorGO(p.uniqueID) != null).ToList();
 
-            // assign teamIDs according to colorIDs
+            // assign TeamIDs according to colorIDs
             int nextTeamID = 0;
             foreach (LobbyCharacter player in players.OrderBy(p => this.PlayerVisualColorID(p.uniqueID))) 
             {
                 int colorID = this.PlayerVisualColorID(player.uniqueID);
-                if (this.colorToTeam.TryGetValue(colorID, out int teamID))
+                if (this.colorToTeam.TryGetValue(colorID, out int TeamID))
                 {
-                    this.SetUniqueIDToTeamID(player.uniqueID, teamID);
+                    this.SetUniqueIDToTeamID(player.uniqueID, TeamID);
                 }
                 else
                 {
@@ -312,9 +312,9 @@ namespace RWF
             }
         }
 
-        private void HideEmptyTeams(int[] teamIDs)
+        private void HideEmptyTeams(int[] TeamIDs)
         {
-            foreach (int i in this._teamGroupGOs.Keys.Where(k => !teamIDs.Contains(k)))
+            foreach (int i in this._teamGroupGOs.Keys.Where(k => !TeamIDs.Contains(k)))
             {
                 this._teamGroupGOs[i].SetActive(false);
             }

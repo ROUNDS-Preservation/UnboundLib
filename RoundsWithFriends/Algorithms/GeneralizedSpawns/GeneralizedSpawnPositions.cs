@@ -28,7 +28,7 @@ namespace RWF.Algorithms
         private static readonly LayerMask groundMask = (LayerMask) LayerMask.GetMask(new string[] { "Default", "IgnorePlayer", "IgnoreMap" });
 
         private static int NumberOfTeams => TeamIDs.Count();
-        private static int[] TeamIDs => PlayerManager.instance.players.Select(p => p.teamID).Distinct().ToArray();
+        private static int[] TeamIDs => PlayerManager.instance.players.Select(p => p.TeamID).Distinct().ToArray();
         private static System.Random rng = new System.Random();
 
         private static int RandomRange(int l, int u)
@@ -177,18 +177,18 @@ namespace RWF.Algorithms
             if (players.Count() <= spawnPositions.Count())
             {
                 var teamSpawns = new Dictionary<int, List<Vector2>>() { };
-                foreach (int teamID in TeamIDs)
+                foreach (int TeamID in TeamIDs)
                 {
-                    teamSpawns[teamID] = new List<Vector2>() { };
+                    teamSpawns[TeamID] = new List<Vector2>() { };
                 }
 
                 bool firstTeam = true;
 
                 // If so, then place teammates next to each other
-                foreach (int teamID in TeamIDs.OrderBy(_ => GeneralizedSpawnPositions.RandomRange()).ToArray()) // Shuffle teams
+                foreach (int TeamID in TeamIDs.OrderBy(_ => GeneralizedSpawnPositions.RandomRange()).ToArray()) // Shuffle teams
                 {
                     // Shuffle players in teams
-                    var playersInTeam = PlayerManager.instance.GetPlayersInTeam(teamID).OrderBy(_ => GeneralizedSpawnPositions.RandomRange()).ToArray();
+                    var playersInTeam = PlayerManager.instance.GetPlayersInTeam(TeamID).OrderBy(_ => GeneralizedSpawnPositions.RandomRange()).ToArray();
                     var spawnPrev = Vector2.zero;
                     if (firstTeam)
                     {
@@ -206,14 +206,14 @@ namespace RWF.Algorithms
                     }
                     spawnPositions.Remove(spawnPrev);
                     spawnDictionary[playersInTeam[0]] = spawnPrev;
-                    teamSpawns[teamID].Add(spawnPrev);
+                    teamSpawns[TeamID].Add(spawnPrev);
                     // Then pick closest spawn points for remaining teammates
                     for (int i = 1; i < playersInTeam.Count(); i++)
                     {
                         spawnPrev = spawnPositions.OrderBy(s => Vector2.Distance(spawnPrev, s)).First();
                         spawnPositions.Remove(spawnPrev);
                         spawnDictionary[playersInTeam[i]] = spawnPrev;
-                        teamSpawns[teamID].Add(spawnPrev);
+                        teamSpawns[TeamID].Add(spawnPrev);
                     }
                 }
 

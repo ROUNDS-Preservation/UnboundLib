@@ -421,9 +421,9 @@ namespace RWF
             for (int i = 1; i < charGo.transform.childCount; i++)
             {
                 var creatorGo = charGo.transform.GetChild(i);
-                int playerID = i - 1;
-                int teamID = playerID % this.MaxTeams;
-                var faceColor = PlayerSkinBank.GetPlayerSkinColors(teamID).color;
+                int PlayerID = i - 1;
+                int TeamID = PlayerID % this.MaxTeams;
+                var faceColor = PlayerSkinBank.GetPlayerSkinColors(TeamID).color;
 
                 var buttonSource = creatorGo.transform.Find("Canvas").Find("Items").GetChild(0);
                 buttonSource.Find("Face").gameObject.GetComponent<Image>().color = faceColor;
@@ -523,12 +523,12 @@ namespace RWF
                 var creatorGo3 = GameObject.Instantiate(creatorGo1, charGo.transform);
                 creatorGo3.name = "Creator_Local3";
                 creatorGo3.transform.localScale = Vector3.one;
-                creatorGo3.GetComponent<CharacterCreator>().playerID = 2;
+                creatorGo3.GetComponent<CharacterCreator>().PlayerID = 2;
 
                 var creatorGo4 = GameObject.Instantiate(creatorGo2, charGo.transform);
                 creatorGo4.name = "Creator_Local4";
                 creatorGo4.transform.localScale = Vector3.one;
-                creatorGo4.GetComponent<CharacterCreator>().playerID = 3;
+                creatorGo4.GetComponent<CharacterCreator>().PlayerID = 3;
             }
 
             if (!gameGo.transform.Find("RoundStartText"))

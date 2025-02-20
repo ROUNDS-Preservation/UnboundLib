@@ -274,10 +274,10 @@ namespace Unbound.Core.Utils {
         /// <summary>
         /// Legacy code for getting names. Always returns english names. Use GetLocalizedTeamColorName when posible.
         /// </summary>
-        public static string GetTeamColorName(int teamID) {
+        public static string GetTeamColorName(int TeamID) {
             // team names as colors
 
-            switch(teamID) {
+            switch(TeamID) {
                 case 0:
                     return "Orange";
                 case 1:
@@ -343,14 +343,14 @@ namespace Unbound.Core.Utils {
                 case 31:
                     return "Dark Cyan";
                 default:
-                    return (teamID + 1).ToString();
+                    return (TeamID + 1).ToString();
             }
         }
 
 
 
-        public static LocalizedString GetLocalizedTeamColorName(int teamID) {
-            return TranslationStrings.TeamColorNames.GenerateString(TableRefHelper.stringTableDefault, $"Team_{teamID}_Name");
+        public static LocalizedString GetLocalizedTeamColorName(int TeamID) {
+            return TranslationStrings.TeamColorNames.GenerateString(TableRefHelper.stringTableDefault, $"Team_{TeamID}_Name");
         }
 
         public static PlayerSkin GetPlayerSkinColors(int colorID) {

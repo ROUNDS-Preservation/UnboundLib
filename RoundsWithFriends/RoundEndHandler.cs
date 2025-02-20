@@ -24,7 +24,7 @@ namespace RWF
         internal static IEnumerator OnRoundEnd(IGameModeHandler gm)
         {
             int maxRounds = (int) gm.Settings["roundsToWinGame"];
-            var teams = PlayerManager.instance.players.Select(p => p.teamID).Distinct();
+            var teams = PlayerManager.instance.players.Select(p => p.TeamID).Distinct();
             int? winnerTeam = teams.Select(id => (int?) id).FirstOrDefault(id => gm.GetTeamScore(id.Value).rounds >= maxRounds);
 
             if (winnerTeam != null)

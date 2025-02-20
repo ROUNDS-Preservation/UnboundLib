@@ -43,11 +43,11 @@ namespace UnboundLib.Networking.Lobbies {
         private static IEnumerator DoHost(bool StaticCode) {
             yield return instance.ConectIfDisconected();
             steamLobby.CreateLobby(UnboundNetworking.MaxPlayers, delegate (string roomName) {
-                CSteamID lobbyID = new CSteamID(ulong.Parse(roomName));
+                CSTeamID lobbyID = new CSTeamID(ulong.Parse(roomName));
                 Debug.Log($"Created steam lobby: {roomName}");
                 SteamMatchmaking.SetLobbyType(lobbyID, ELobbyType.k_ELobbyTypePublic);
                 SteamMatchmaking.SetLobbyJoinable(lobbyID, true);
-                var roomCode = StaticCode ? $"{PhotonNetwork.CloudRegion}:{Encode((long)SteamUser.GetSteamID().m_SteamID)}!" : $"{PhotonNetwork.CloudRegion}:{Encode(long.Parse(roomName))}";
+                var roomCode = StaticCode ? $"{PhotonNetwork.CloudRegion}:{Encode((long)SteamUser.GetSTeamID().m_STeamID)}!" : $"{PhotonNetwork.CloudRegion}:{Encode(long.Parse(roomName))}";
                 var options = RoomOptions.Clone();
                 options.CustomRoomProperties.Add("F", PropertyFlags.None);
                 options.CustomRoomProperties.Add("H", SyncModClients.GetCompatablityHash());

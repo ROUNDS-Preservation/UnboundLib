@@ -9,8 +9,8 @@ using Unbound.Core.Extensions;
 namespace Unbound.Cards.Patches {
     [HarmonyPatch(typeof(CardChoiceVisuals), "Show")]
     class CardChoiceVisuals_Patch_Show {
-        static int GetColorIDFromPlayerID(int playerID) {
-            return PlayerManager.instance.players[playerID].colorID();
+        static int GetColorIDFromPlayerID(int PlayerID) {
+            return PlayerManager.instance.players[PlayerID].colorID();
         }
         static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions) {
             List<CodeInstruction> codes = instructions.ToList();
@@ -20,7 +20,7 @@ namespace Unbound.Cards.Patches {
             var m_GetPlayerSkinColors = ExtensionMethods.GetMethodInfo(typeof(PlayerSkinBank), nameof(PlayerSkinBank.GetPlayerSkinColors));
             var m_getColorID = ExtensionMethods.GetMethodInfo(typeof(CardChoiceVisuals_Patch_Show), nameof(GetColorIDFromPlayerID));
 
-            // replace GetPlayerSkinColors(playerID) with GetPlayerSkinColors(player.colorID()) always
+            // replace GetPlayerSkinColors(PlayerID) with GetPlayerSkinColors(player.colorID()) always
             for(int i = 1; i < instructions.Count() - 1; i++) {
                 if(codes[i].opcode != OpCodes.Ldarg_1 || codes[i - 1].opcode != OpCodes.Ldarg_0 || !codes[i + 1].Calls(m_GetPlayerSkinColors)) continue;
                 colorIdx = i + 1;

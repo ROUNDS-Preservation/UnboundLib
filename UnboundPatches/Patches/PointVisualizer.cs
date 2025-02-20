@@ -7,8 +7,8 @@ using Unbound.Core.Extensions;
 namespace Unbound.Patches {
     [HarmonyPatch(typeof(PointVisualizer), "DoShowPoints")]
     class PointVisualizer_Patch_DoShowPoints {
-        static int GetColorIDFromPlayerID(int playerID) {
-            return PlayerManager.instance.players[playerID].colorID();
+        static int GetColorIDFromPlayerID(int PlayerID) {
+            return PlayerManager.instance.players[PlayerID].colorID();
         }
         static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions) {
             var m_GetPlayerSkinColors = typeof(PlayerSkinBank).GetMethodInfo(nameof(PlayerSkinBank.GetPlayerSkinColors));

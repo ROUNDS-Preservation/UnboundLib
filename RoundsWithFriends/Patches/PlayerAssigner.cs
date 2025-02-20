@@ -96,11 +96,11 @@ namespace RWF.Patches
     [HarmonyPatch(typeof(PlayerAssigner), "RPC_ReturnPlayerAndTeamID")]
     class PlayerAssigner_Patch_RPC_ReturnPlayerAndTeamID
     {
-        static void Prefix(ref int teamId, ref int playerID) {
-            // This method is called wrong with (playerID, teamId) instead of (teamId, playerID) like the method signature...
+        static void Prefix(ref int teamId, ref int PlayerID) {
+            // This method is called wrong with (PlayerID, teamId) instead of (teamId, PlayerID) like the method signature...
             int temp = teamId;
-            teamId = playerID;
-            playerID = temp;
+            teamId = PlayerID;
+            PlayerID = temp;
         }
     }
 
@@ -121,26 +121,26 @@ namespace RWF.Patches
         }
 
         static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions) {
-            // Replace `this.playerIDToSet = PlayerManager.instance.players.Count;` with `this.playerIDToSet = PatchUtils.NextPlayerID();`
+            // Replace `this.PlayerIDToSet = PlayerManager.instance.players.Count;` with `this.PlayerIDToSet = PatchUtils.NextPlayerID();`
             var list = instructions.ToList();
             var newInstructions = new List<CodeInstruction>();
 
             var f_playerManagerInstance = AccessTools.Field(typeof(PlayerManager), "instance");
-            var f_playerIDToSet = ExtensionMethods.GetFieldInfo(typeof(PlayerAssigner), "playerIDToSet");
-            var f_teamIDToSet = ExtensionMethods.GetFieldInfo(typeof(PlayerAssigner), "teamIDToSet");
+            var f_PlayerIDToSet = ExtensionMethods.GetFieldInfo(typeof(PlayerAssigner), "PlayerIDToSet");
+            var f_TeamIDToSet = ExtensionMethods.GetFieldInfo(typeof(PlayerAssigner), "TeamIDToSet");
 
             var m_NextPlayerID = ExtensionMethods.GetMethodInfo(typeof(PatchUtils), "NextPlayerID");
             var m_NextTeamID = ExtensionMethods.GetMethodInfo(typeof(PatchUtils), "NextTeamID");
 
             for (int i = 0; i < list.Count; i++) {
-                if (list[i].LoadsField(f_playerManagerInstance) && list[i + 3].StoresField(f_playerIDToSet)) {
+                if (list[i].LoadsField(f_playerManagerInstance) && list[i + 3].StoresField(f_PlayerIDToSet)) {
                     newInstructions.Add(new CodeInstruction(OpCodes.Call, m_NextPlayerID));
-                    newInstructions.Add(new CodeInstruction(OpCodes.Stfld, f_playerIDToSet));
+                    newInstructions.Add(new CodeInstruction(OpCodes.Stfld, f_PlayerIDToSet));
                     newInstructions.Add(new CodeInstruction(OpCodes.Ldloc_1));
                     newInstructions.Add(new CodeInstruction(OpCodes.Call, m_NextTeamID));
-                    newInstructions.Add(new CodeInstruction(OpCodes.Stfld, f_teamIDToSet));
+                    newInstructions.Add(new CodeInstruction(OpCodes.Stfld, f_TeamIDToSet));
 
-                    while (!list[i].StoresField(f_teamIDToSet)) {
+                    while (!list[i].StoresField(f_TeamIDToSet)) {
                         i++;
                     }
                 } else {

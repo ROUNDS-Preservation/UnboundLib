@@ -12,9 +12,9 @@ namespace RWF.Patches
     [HarmonyPatch(typeof(CardChoiceVisuals), "Show")]
     class CardChoiceVisuals_Patch_Show
     {
-        static int GetLocalIDFromPlayerID(int playerID)
+        static int GetLocalIDFromPlayerID(int PlayerID)
         {
-            return PlayerManager.instance.players[playerID].GetAdditionalData().localID;
+            return PlayerManager.instance.players[PlayerID].GetAdditionalData().localID;
         }
         static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
         {

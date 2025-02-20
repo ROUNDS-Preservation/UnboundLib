@@ -42,7 +42,7 @@ namespace RWF
             catch (Exception) { }
         }
 
-        public static void AssignCharacter(this Player instance, LobbyCharacter character, int playerID)
+        public static void AssignCharacter(this Player instance, LobbyCharacter character, int PlayerID)
         {
             instance.GetAdditionalData().character = character;
 
@@ -51,8 +51,8 @@ namespace RWF
             instance.AssignLocalID(character.localID);
             instance.AssignUniqueID(character.uniqueID);
             instance.AssignColorID(character.colorID);
-            instance.AssignTeamID(character.teamID);
-            instance.AssignPlayerID(playerID);
+            instance.AssignTeamID(character.TeamID);
+            instance.AssignPlayerID(PlayerID);
 
             PlayerManager.instance.PlayerJoined(instance);
         }

@@ -23,13 +23,13 @@ namespace RWF.Algorithms
 
         public void AddPlayer(Player player)
         {
-            if (!this.playerOrders.ContainsKey(player.teamID))
+            if (!this.playerOrders.ContainsKey(player.TeamID))
             {
-                this.playerOrders.Add(player.teamID, new List<Player>());
-                this.teamOrder.Add(player.teamID);
+                this.playerOrders.Add(player.TeamID, new List<Player>());
+                this.teamOrder.Add(player.TeamID);
             }
 
-            this.playerOrders[player.teamID].Add(player);
+            this.playerOrders[player.TeamID].Add(player);
         }
 
         public void RefreshOrder(int[] winningTeamIDs)
@@ -68,9 +68,9 @@ namespace RWF.Algorithms
 
             for (int playerIndex = 0; playerIndex < maxTeamPlayers; playerIndex++)
             {
-                foreach (int teamID in this.teamOrder.Where(id => !winningTeamIDs.Contains(id)))
+                foreach (int TeamID in this.teamOrder.Where(id => !winningTeamIDs.Contains(id)))
                 {
-                    var playerOrder = this.playerOrders[teamID];
+                    var playerOrder = this.playerOrders[TeamID];
                     if (playerIndex < playerOrder.Count)
                     {
                         yield return playerOrder[playerIndex];

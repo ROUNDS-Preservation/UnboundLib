@@ -24,7 +24,7 @@ namespace RWF.Patches
     {
         private static bool Prefix(PlayerManager __instance, Player player)
         {
-            int num = PlayerManager.instance.players.Where(p => !p.data.dead).Select(p => p.teamID).Distinct().Count();
+            int num = PlayerManager.instance.players.Where(p => !p.data.dead).Select(p => p.TeamID).Distinct().Count();
 
             if ((Action<Player, int>) __instance.GetFieldValue("PlayerDiedAction") != null)
             {
@@ -92,7 +92,7 @@ namespace RWF.Patches
     {
         static bool Prefix(PlayerManager __instance, Player asker, ref Player __result)
         {
-            __result = __instance.GetClosestPlayerInOtherTeam(asker.transform.position, asker.teamID, false);
+            __result = __instance.GetClosestPlayerInOtherTeam(asker.transform.position, asker.TeamID, false);
             return false;
         }
     }
@@ -160,7 +160,7 @@ namespace RWF.Patches
                 OutOfBoundsHandler[] ooBs = UnityEngine.GameObject.FindObjectsOfType<OutOfBoundsHandler>();
                 foreach (OutOfBoundsHandler ooB in ooBs)
                 {
-                    if (((CharacterData) ooB.GetFieldValue("data")).player.playerID == player.GetComponent<Player>().playerID)
+                    if (((CharacterData) ooB.GetFieldValue("data")).player.PlayerID == player.GetComponent<Player>().PlayerID)
                     {
                         ooB.enabled = active;
                         break;
@@ -277,7 +277,7 @@ namespace RWF.Patches
             var spawnDictionary = GeneralizedSpawnPositions.GetSpawnDictionary(__instance.players, spawnPoints);
             var serializableSpawnDictionary = PlayerManager.instance.players.Select(p => spawnDictionary[p]).ToArray();
 
-            // send the spawn dictionary to all clients as a vector2 array where the position is the playerID
+            // send the spawn dictionary to all clients as a vector2 array where the position is the PlayerID
             NetworkingManager.RPC(typeof(PlayerManager_Patch_MovePlayers), nameof(PlayerManager_Patch_MovePlayers.RPCA_MovePlayers), serializableSpawnDictionary);
 
             yield break;
@@ -290,7 +290,7 @@ namespace RWF.Patches
 
                 PlayerManager.instance.StartCoroutine((IEnumerator) typeof(PlayerManager).InvokeMember("Move",
                     BindingFlags.Instance | BindingFlags.InvokeMethod |
-                    BindingFlags.NonPublic, null, PlayerManager.instance, new object[] { PlayerManager.instance.players[i].data.playerVel, (Vector3) spawnDictionary[PlayerManager.instance.players[i].playerID] }));
+                    BindingFlags.NonPublic, null, PlayerManager.instance, new object[] { PlayerManager.instance.players[i].data.playerVel, (Vector3) spawnDictionary[PlayerManager.instance.players[i].PlayerID] }));
 
                 int j = i % PlayerManager.instance.soundCharacterSpawn.Length;
 

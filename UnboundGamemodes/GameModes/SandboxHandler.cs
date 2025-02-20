@@ -20,11 +20,11 @@ namespace Unbound.Gamemodes {
             GameMode.InvokeMethod("PlayerDied", killedPlayer, playersAlive);
         }
 
-        public override TeamScore GetTeamScore(int teamID) {
+        public override TeamScore GetTeamScore(int TeamID) {
             return new TeamScore(0, 0);
         }
 
-        public override void SetTeamScore(int teamID, TeamScore score) { }
+        public override void SetTeamScore(int TeamID, TeamScore score) { }
 
         public override void SetActive(bool active) {
             if(!active) {

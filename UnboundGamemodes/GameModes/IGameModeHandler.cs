@@ -32,7 +32,7 @@ namespace Unbound.Gamemodes {
 
         /// <summary>
         ///     Should handle cleanup when a player leaves the game mid-match, ideally in such a way that allows the game to continue.
-        ///     The default implementation takes care of reassigning playerIDs and teamIDs to ensure they are sequential, but any extra
+        ///     The default implementation takes care of reassigning PlayerIDs and TeamIDs to ensure they are sequential, but any extra
         ///     handling must be done here.
         /// </summary>
         void PlayerLeft(Player leftPlayer);
@@ -40,31 +40,31 @@ namespace Unbound.Gamemodes {
         /// <summary>
         ///     Should return the current score of a team. This value should reflect the state of the actual game when applicable.
         /// </summary>
-        /// <param name="teamID">The ID of the team whose score should be returned.</param>
+        /// <param name="TeamID">The ID of the team whose score should be returned.</param>
         /// <returns></returns>
-        TeamScore GetTeamScore(int teamID);
+        TeamScore GetTeamScore(int TeamID);
 
         /// <summary>
         ///     Sets the current score of a team. Changing the score should reflect in the actual game when applicable.
         /// </summary>
-        /// <param name="teamID">ID of the team whose score should be changed.</param>
+        /// <param name="TeamID">ID of the team whose score should be changed.</param>
         /// <param name="score">Score to set for the team.</param>
-        void SetTeamScore(int teamID, TeamScore score);
+        void SetTeamScore(int TeamID, TeamScore score);
 
         /// <summary>
-        ///     Returns an array of all teamIDs for which the team has satisfied the win condition.
+        ///     Returns an array of all TeamIDs for which the team has satisfied the win condition.
         ///     Should return an empty array when there are no winners
         /// </summary>
         int[] GetGameWinners();
 
         /// <summary>
-        ///     Returns an array of all teamIDs for which won the most recent round
+        ///     Returns an array of all TeamIDs for which won the most recent round
         ///     Should return an empty array when there has yet to be any round winners in the game so far
         /// </summary>
         int[] GetRoundWinners();
 
         /// <summary>
-        ///     Returns an array of all teamIDs for which won the most recent point
+        ///     Returns an array of all TeamIDs for which won the most recent point
         ///     Should return an empty array when there has yet to be any point winners in the game so far
         /// </summary>
         int[] GetPointWinners();

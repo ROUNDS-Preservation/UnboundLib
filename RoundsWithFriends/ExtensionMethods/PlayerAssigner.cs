@@ -41,14 +41,14 @@ namespace RWF
                 {
                     if (PhotonNetwork.IsMasterClient)
                     {
-                        instance.SetFieldValue("playerIDToSet", PlayerManager.instance.players.Count);
-                        instance.SetFieldValue("teamIDToSet", character.teamID);
+                        instance.SetFieldValue("PlayerIDToSet", PlayerManager.instance.players.Count);
+                        instance.SetFieldValue("TeamIDToSet", character.TeamID);
                     }
                 }
                 else
                 {
-                    instance.SetFieldValue("playerIDToSet", PlayerManager.instance.players.Count);
-                    instance.SetFieldValue("teamIDToSet", character.teamID);
+                    instance.SetFieldValue("PlayerIDToSet", PlayerManager.instance.players.Count);
+                    instance.SetFieldValue("TeamIDToSet", character.TeamID);
                 }
                 SoundPlayerStatic.Instance.PlayPlayerAdded();
                 Vector3 position = Vector3.up * 100f;
@@ -68,20 +68,20 @@ namespace RWF
                 
                 instance.players.Add(component);
                 PlayerManager.RegisterPlayer(component.player);
-                //component.player.AssignCharacter(character, (int)instance.GetFieldValue("playerIDToSet"));
+                //component.player.AssignCharacter(character, (int)instance.GetFieldValue("PlayerIDToSet"));
                 // assign character
-                yield return SyncMethodStatic.SyncMethod(typeof(PlayerAssignerExtensions), nameof(PlayerAssignerExtensions.RPCA_AssignCharacter), null, component.view.ViewID, character, (int) instance.GetFieldValue("playerIDToSet"));
+                yield return SyncMethodStatic.SyncMethod(typeof(PlayerAssignerExtensions), nameof(PlayerAssignerExtensions.RPCA_AssignCharacter), null, component.view.ViewID, character, (int) instance.GetFieldValue("PlayerIDToSet"));
 
                 yield break;
             }
             yield break;
         }
         [UnboundRPC]
-        private static void RPCA_AssignCharacter(int viewID, LobbyCharacter character, int playerID)
+        private static void RPCA_AssignCharacter(int viewID, LobbyCharacter character, int PlayerID)
         {
-            PlayerAssigner.instance.StartCoroutine(PlayerAssignerExtensions.AssignCharacterCoroutine(viewID, character, playerID));
+            PlayerAssigner.instance.StartCoroutine(PlayerAssignerExtensions.AssignCharacterCoroutine(viewID, character, PlayerID));
         }
-        private static IEnumerator AssignCharacterCoroutine(int viewID, LobbyCharacter character, int playerID)
+        private static IEnumerator AssignCharacterCoroutine(int viewID, LobbyCharacter character, int PlayerID)
         {
             yield return new WaitUntil(() =>
             {
@@ -89,8 +89,8 @@ namespace RWF
             });
 
             // only assign on all other clients
-            //if (!PhotonView.Find(viewID).IsMine) { PhotonView.Find(viewID).GetComponent<Player>().AssignCharacter(character, playerID); }
-            PhotonView.Find(viewID).GetComponent<Player>().AssignCharacter(character, playerID);
+            //if (!PhotonView.Find(viewID).IsMine) { PhotonView.Find(viewID).GetComponent<Player>().AssignCharacter(character, PlayerID); }
+            PhotonView.Find(viewID).GetComponent<Player>().AssignCharacter(character, PlayerID);
 
             NetworkingManager.RPC(typeof(PlayerAssignerExtensions), nameof(PlayerAssignerExtensions.CreatePlayerResponse), PhotonNetwork.LocalPlayer.ActorNumber, character);
         }

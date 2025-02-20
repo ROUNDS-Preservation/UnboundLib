@@ -142,8 +142,8 @@ namespace RWF.GameModes
 
         public virtual void PlayerJoined(Player player)
         {
-            if (!this.teamPoints.ContainsKey(player.teamID)) { this.teamPoints.Add(player.teamID, 0); }
-            if (!this.teamRounds.ContainsKey(player.teamID)) { this.teamRounds.Add(player.teamID, 0); }
+            if (!this.teamPoints.ContainsKey(player.TeamID)) { this.teamPoints.Add(player.TeamID, 0); }
+            if (!this.teamRounds.ContainsKey(player.TeamID)) { this.teamRounds.Add(player.TeamID, 0); }
         }
 
         public virtual void PlayerDied(Player killedPlayer, int teamsAlive)
@@ -157,7 +157,7 @@ namespace RWF.GameModes
                     NetworkingManager.RPC(
                         typeof(RWFGameMode),
                         nameof(RWFGameMode.RPCA_NextRound),
-                        new int[] { PlayerManager.instance.GetLastPlayerAlive().teamID },
+                        new int[] { PlayerManager.instance.GetLastPlayerAlive().TeamID },
                         this.teamPoints,
                         this.teamRounds
                     );
@@ -223,8 +223,8 @@ namespace RWF.GameModes
 
                 yield return GameModeManager.TriggerHook(GameModeHooks.HookPlayerPickStart);
 
-                CardChoiceVisuals.instance.Show(player.playerID, true);
-                yield return CardChoice.instance.DoPick(1, player.playerID, PickerType.Player);
+                CardChoiceVisuals.instance.Show(player.PlayerID, true);
+                yield return CardChoice.instance.DoPick(1, player.PlayerID, PickerType.Player);
 
                 yield return GameModeManager.TriggerHook(GameModeHooks.HookPlayerPickEnd);
 
@@ -280,14 +280,14 @@ namespace RWF.GameModes
 
             foreach (Player player in pickOrder)
             {
-                if (!winningTeamIDs.Contains(player.teamID))
+                if (!winningTeamIDs.Contains(player.TeamID))
                 {
                     yield return this.WaitForSyncUp();
 
                     yield return GameModeManager.TriggerHook(GameModeHooks.HookPlayerPickStart);
 
-                    CardChoiceVisuals.instance.Show(player.playerID, true);
-                    yield return CardChoice.instance.DoPick(1, player.playerID, PickerType.Player);
+                    CardChoiceVisuals.instance.Show(player.PlayerID, true);
+                    yield return CardChoice.instance.DoPick(1, player.PlayerID, PickerType.Player);
 
                     yield return GameModeManager.TriggerHook(GameModeHooks.HookPlayerPickEnd);
 
@@ -429,9 +429,9 @@ namespace RWF.GameModes
         }
         public virtual void RoundOver(int[] winningTeamIDs)
         {
-            foreach (var teamID in this.teamPoints.Keys.ToList())
+            foreach (var TeamID in this.teamPoints.Keys.ToList())
             {
-                this.teamPoints[teamID] = 0;
+                this.teamPoints[TeamID] = 0;
             }
 
             this.previousRoundWinners = winningTeamIDs.ToArray();
@@ -475,7 +475,7 @@ namespace RWF.GameModes
         {
             if (PhotonNetwork.OfflineMode)
             {
-                var winningPlayer = PlayerManager.instance.players.Find(p => winningTeamIDs.Contains(p.playerID));
+                var winningPlayer = PlayerManager.instance.players.Find(p => winningTeamIDs.Contains(p.PlayerID));
                 UIHandler.instance.DisplayScreenTextLoop(winningPlayer.GetTeamColors().winText, "REMATCH?");
                 UIHandler.instance.popUpHandler.StartPicking(winningPlayer, this.GetRematchYesNo);
                 MapManager.instance.LoadNextLevel(false, false);
@@ -517,8 +517,8 @@ namespace RWF.GameModes
 
             foreach (var player in PlayerManager.instance.players)
             {
-                this.teamPoints[player.teamID] = 0;
-                this.teamRounds[player.teamID] = 0;
+                this.teamPoints[player.TeamID] = 0;
+                this.teamRounds[player.TeamID] = 0;
             }
 
             this.isTransitioning = false;

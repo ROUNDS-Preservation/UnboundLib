@@ -75,7 +75,7 @@ namespace RWF.UI
 
             VersusDisplay.instance.SetPlayerSelectorGO(lobbyCharacter.uniqueID, this.gameObject);
 
-            VersusDisplay.instance.TeamGroupGO(lobbyCharacter.teamID, lobbyCharacter.colorID).SetActive(true);
+            VersusDisplay.instance.TeamGroupGO(lobbyCharacter.TeamID, lobbyCharacter.colorID).SetActive(true);
             VersusDisplay.instance.PlayerGO(lobbyCharacter.uniqueID).SetActive(true);
             this.transform.SetParent(VersusDisplay.instance.PlayerGO(lobbyCharacter.uniqueID).transform);
 
@@ -183,7 +183,7 @@ namespace RWF.UI
 
                 if (this.currentPlayer.IsMine)
                 {
-                    // set "playerID" so that preferences will be updated when changed
+                    // set "PlayerID" so that preferences will be updated when changed
                     this.buttons[i].GetComponentInChildren<CharacterCreatorPortrait>().playerId = this.currentPlayer.localID;
                 }
 

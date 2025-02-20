@@ -21,7 +21,7 @@ namespace RWF
             }
             LobbyCharacter result = new LobbyCharacter(PhotonNetwork.CurrentRoom.Players[(int) data[0]], (int) data[1], (int)data[2])
             {
-                teamID = (int) data[3],
+                TeamID = (int) data[3],
                 ready = (int) data[5] == 1
             };
             result.faceID = (int) data[4];
@@ -33,14 +33,14 @@ namespace RWF
             if (lobbyCharacter == null) { return new byte[] { 0,0,0,0,0,0,1 }; }
 
             LobbyCharacter c = (LobbyCharacter) lobbyCharacter;
-            return new byte[] { (byte)c.actorID, (byte)c.colorID, (byte)c.localID, (byte)c.teamID, (byte)c.faceID, (byte)(c.ready ? 1 : 0), 0};
+            return new byte[] { (byte)c.actorID, (byte)c.colorID, (byte)c.localID, (byte)c.TeamID, (byte)c.faceID, (byte)(c.ready ? 1 : 0), 0};
         }
 
         public Photon.Realtime.Player networkPlayer;
         // unique IDs are purposely negative so that they can be easily differentiated from actorIDs
         public int uniqueID => -(this.actorID * RWFMod.instance.MaxCharactersPerClient + this.localID) - 1;
         public int colorID;
-        public int teamID;
+        public int TeamID;
         public int faceID;
         public bool ready = false;
         public string NickName => this.localID == 0 ? networkPlayer.NickName : networkPlayer.NickName + $" {this.localID + 1}";

@@ -60,15 +60,15 @@ namespace RWF.GameModes
         }
         public override void PlayerLeft(Player leftPlayer)
         {
-            // store old teamIDs so that we can make a dictionary of old to new teamIDs
-            Dictionary<Player, int> oldTeamIDs = PlayerManager.instance.players.ToDictionary(p => p, p => p.teamID);
+            // store old TeamIDs so that we can make a dictionary of old to new TeamIDs
+            Dictionary<Player, int> oldTeamIDs = PlayerManager.instance.players.ToDictionary(p => p, p => p.TeamID);
 
-            // UnboundLib handles PlayerManager fixing, which includes reassigning playerIDs and teamIDs
+            // UnboundLib handles PlayerManager fixing, which includes reassigning PlayerIDs and TeamIDs
             // as well as card bar fixing
             base.PlayerLeft(leftPlayer);
 
-            // get new teamIDs
-            Dictionary<Player, int> newTeamIDs = PlayerManager.instance.players.ToDictionary(p => p, p => p.teamID);
+            // get new TeamIDs
+            Dictionary<Player, int> newTeamIDs = PlayerManager.instance.players.ToDictionary(p => p, p => p.TeamID);
 
             // update team scores
             Dictionary<int, int> newTeamPoints = new Dictionary<int, int>() { };
@@ -97,15 +97,15 @@ namespace RWF.GameModes
 
         }
 
-        public override TeamScore GetTeamScore(int teamID)
+        public override TeamScore GetTeamScore(int TeamID)
         {
-            return new TeamScore(this.GameMode.teamPoints[teamID], this.GameMode.teamRounds[teamID]);
+            return new TeamScore(this.GameMode.teamPoints[TeamID], this.GameMode.teamRounds[TeamID]);
         }
 
-        public override void SetTeamScore(int teamID, TeamScore score)
+        public override void SetTeamScore(int TeamID, TeamScore score)
         {
-            this.GameMode.teamPoints[teamID] = score.points;
-            this.GameMode.teamRounds[teamID] = score.rounds;
+            this.GameMode.teamPoints[TeamID] = score.points;
+            this.GameMode.teamRounds[TeamID] = score.rounds;
         }
 
         public override int[] GetGameWinners()

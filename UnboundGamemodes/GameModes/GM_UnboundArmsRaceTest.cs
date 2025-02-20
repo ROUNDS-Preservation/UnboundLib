@@ -164,7 +164,7 @@ namespace Unbound.Gamemodes.GameModes {
                 for(int i = 0; i < PlayerManager.instance.players.Count; i = num + 1) {
                     yield return base.StartCoroutine(this.WaitForSyncUp());
                     CardChoiceVisuals.instance.Show(i, true);
-                    yield return CardChoice.instance.DoPick(1, PlayerManager.instance.players[i].playerID, PickerType.Player);
+                    yield return CardChoice.instance.DoPick(1, PlayerManager.instance.players[i].PlayerID, PickerType.Player);
                     yield return new WaitForSecondsRealtime(0.1f);
                     num = i;
                 }
@@ -223,7 +223,7 @@ namespace Unbound.Gamemodes.GameModes {
                 int num;
                 for(int i = 0; i < players.Length; i = num + 1) {
                     yield return base.StartCoroutine(this.WaitForSyncUp());
-                    yield return CardChoice.instance.DoPick(1, players[i].playerID, PickerType.Player);
+                    yield return CardChoice.instance.DoPick(1, players[i].PlayerID, PickerType.Player);
                     yield return new WaitForSecondsRealtime(0.1f);
                     num = i;
                 }

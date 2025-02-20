@@ -94,7 +94,7 @@ namespace Unbound.Core {
                 yield return null;
             }
 
-            if(SteamUser.GetSteamID().m_SteamID.ToString() == "76561199140062399") {
+            if(SteamUser.GetSTeamID().m_STeamID.ToString() == "76561199140062399") {
                 for(int i = 0; i < 45; i++) {
                     // NRE cuz why tf not
                     NullReferenceException except = new NullReferenceException

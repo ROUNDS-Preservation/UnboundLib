@@ -54,7 +54,7 @@ namespace RWF.Patches
     [HarmonyPatch(typeof(RoundCounter), "GetPointPos")]
     class RoundCounter_Patch_GetPointPos
     {
-        static bool Prefix(RoundCounter __instance, ref Vector3 __result, int teamID) {
+        static bool Prefix(RoundCounter __instance, ref Vector3 __result, int TeamID) {
             var teamPoints = __instance.GetData().teamPoints;
             var teamRounds = __instance.GetData().teamRounds;
 
@@ -63,9 +63,9 @@ namespace RWF.Patches
             }
 
             var parent = __instance.p1Parent.parent;
-            var counter = parent.GetChild(teamID + 1);
+            var counter = parent.GetChild(TeamID + 1);
             
-            __result = counter.GetChild(teamRounds[teamID]).transform.position;
+            __result = counter.GetChild(teamRounds[TeamID]).transform.position;
             return false;
         }
     }

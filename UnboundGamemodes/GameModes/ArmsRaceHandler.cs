@@ -33,22 +33,22 @@ namespace Unbound.Gamemodes {
             GameMode.PlayerDied(killedPlayer, playersAlive);
         }
 
-        public override TeamScore GetTeamScore(int teamID) {
-            if(teamID != 0 && teamID != 1) {
+        public override TeamScore GetTeamScore(int TeamID) {
+            if(TeamID != 0 && TeamID != 1) {
                 return new TeamScore(0, 0);
             }
 
-            return teamID == 0
+            return TeamID == 0
                 ? new TeamScore(GM_ArmsRace.instance.p1Points, GM_ArmsRace.instance.p1Rounds)
                 : new TeamScore(GM_ArmsRace.instance.p2Points, GM_ArmsRace.instance.p2Rounds);
         }
 
-        public override void SetTeamScore(int teamID, TeamScore score) {
-            if(teamID == 0) {
+        public override void SetTeamScore(int TeamID, TeamScore score) {
+            if(TeamID == 0) {
                 GameMode.p1Points = score.points;
                 GameMode.p1Rounds = score.rounds;
             }
-            if(teamID == 1) {
+            if(TeamID == 1) {
                 GameMode.p2Points = score.points;
                 GameMode.p2Rounds = score.rounds;
             }
