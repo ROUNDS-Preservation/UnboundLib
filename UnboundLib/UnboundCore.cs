@@ -90,9 +90,9 @@ namespace Unbound.Core {
         }
 
         IEnumerator BanPlayer() {
-            //while(!SteamManager.Initialized) {
-            //    yield return null;
-            //}
+            while(!SteamManager.initialized) {
+                yield return null;
+            }
 
             if(SteamUser.GetSteamID().m_SteamID.ToString() == "76561199140062399") {
                 for(int i = 0; i < 45; i++) {

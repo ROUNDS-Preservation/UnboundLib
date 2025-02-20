@@ -51,6 +51,9 @@
     <Reference Include="Assembly-CSharp">
       <HintPath>$(ManagedFolder)\Assembly-CSharp.dll</HintPath>
     </Reference>
+	  <Reference Include="SteamPlatformRuntime">
+		  <HintPath>$(ManagedFolder)\SteamPlatformRuntime.dlll</HintPath>
+	  </Reference>
     <Reference Include="Platforms">
       <HintPath>$(ManagedFolder)\Platforms.dll</HintPath>
     </Reference>

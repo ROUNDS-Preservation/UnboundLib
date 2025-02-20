@@ -8,10 +8,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unbound.Core;
-using UnboundLib.Networking;
 using UnboundLib.Networking.Utils;
 using UnityEngine;
-using UnityEngine.Localization;
 
 namespace UnboundLib.Networking.Lobbies {
     public class ConectionHandler:MonoBehaviourPunCallbacks {
@@ -184,10 +182,10 @@ namespace UnboundLib.Networking.Lobbies {
                 Debug.Log("Successfully Entered A steam Lobby");
                 CSteamID cSteamID = new CSteamID(param.m_ulSteamIDLobby);
                 __instance.InvokeMethod("UpdateCurrentLobby",cSteamID);
-                //if(SteamManager.Initialized) {
+                if(SteamManager.Initialized) {
                     string lobbyData = SteamMatchmaking.GetLobbyData(cSteamID, "RegionKey");
                     UnboundCore.Instance.StartCoroutine(Unbound_Lobby.JoinSpecific(lobbyData, cSteamID.ToString()));
-                //}
+                }
             }
             return false;
         }
