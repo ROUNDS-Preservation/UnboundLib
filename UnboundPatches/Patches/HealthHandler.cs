@@ -19,7 +19,7 @@ namespace Unbound.Patches {
 
             for(int i = 0; i < ins.Count(); i++) {
                 // we only want to change the first occurence here
-                if(!ins[i].LoadsField(f_PlayerID)) continue;
+                if(!(ins[i].opcode == OpCodes.Callvirt && ins[i].operand.ToString().Contains("Player::get_PlayerID()"))) continue;
                 idx = i;
                 break;
             }
@@ -44,7 +44,7 @@ namespace Unbound.Patches {
 
             for(int i = 0; i < ins.Count(); i++) {
                 // we only want to change the first occurence here
-                if(!ins[i].LoadsField(f_PlayerID)) continue;
+                if(!(ins[i].opcode == OpCodes.Callvirt && ins[i].operand.ToString().Contains("Player::get_PlayerID()"))) continue;
                 idx = i;
                 break;
             }
@@ -65,7 +65,7 @@ namespace Unbound.Patches {
             var m_colorID = typeof(PlayerExtensions).GetMethodInfo(nameof(PlayerExtensions.colorID));
 
             foreach(var ins in instructions) {
-                if(ins.LoadsField(f_PlayerID)) {
+                if(ins.opcode == OpCodes.Callvirt && ins.operand.ToString().Contains("Player::get_PlayerID()")) {
                     // we want colorID instead of TeamID
                     yield return new CodeInstruction(OpCodes.Call, m_colorID); // call the colorID method, which pops the player instance off the stack and leaves the result [colorID, ...]
                 } else {

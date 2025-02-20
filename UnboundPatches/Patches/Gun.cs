@@ -10,7 +10,6 @@ namespace Unbound.Patches {
     [HarmonyPatch(typeof(Gun), "ApplyProjectileStats")]
     class Gun_Patch_ApplyProjectileStats {
         static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions) {
-            var f_PlayerID = typeof(Player).GetFieldInfo("PlayerID");
             var m_colorID = typeof(PlayerExtensions).GetMethodInfo(nameof(PlayerExtensions.colorID));
 
             List<CodeInstruction> ins = instructions.ToList();
@@ -19,7 +18,7 @@ namespace Unbound.Patches {
 
             for(int i = 0; i < ins.Count(); i++) {
                 // we only want to change the first occurence here
-                if(!ins[i].LoadsField(f_PlayerID)) continue;
+                if(!(ins[i].opcode == OpCodes.Callvirt && ins[i].operand.ToString().Contains("Player::get_PlayerID()"))) continue;
                 idx = i;
                 break;
             }
