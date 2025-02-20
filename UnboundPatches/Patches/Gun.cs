@@ -18,7 +18,7 @@ namespace Unbound.Patches {
 
             for(int i = 0; i < ins.Count(); i++) {
                 // we only want to change the first occurence here
-                if(!(ins[i].opcode == OpCodes.Callvirt && ins[i].operand.ToString().Contains("Player::get_PlayerID()"))) continue;
+                if(!(ins[i].opcode == OpCodes.Callvirt && ins[i].operand.ToString().Contains("get_PlayerID()"))) continue;
                 idx = i;
                 break;
             }
