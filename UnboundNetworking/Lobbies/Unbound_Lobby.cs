@@ -47,7 +47,7 @@ namespace UnboundLib.Networking.Lobbies {
                 Debug.Log($"Created steam lobby: {roomName}");
                 SteamMatchmaking.SetLobbyType(lobbyID, ELobbyType.k_ELobbyTypePublic);
                 SteamMatchmaking.SetLobbyJoinable(lobbyID, true);
-                var roomCode = StaticCode ? $"{PhotonNetwork.CloudRegion}:{Encode((long)SteamUser.GetSTeamID().m_STeamID)}!" : $"{PhotonNetwork.CloudRegion}:{Encode(long.Parse(roomName))}";
+                var roomCode = StaticCode ? $"{PhotonNetwork.CloudRegion}:{Encode((long)SteamUser.GetSteamID().m_STeamID)}!" : $"{PhotonNetwork.CloudRegion}:{Encode(long.Parse(roomName))}";
                 var options = RoomOptions.Clone();
                 options.CustomRoomProperties.Add("F", PropertyFlags.None);
                 options.CustomRoomProperties.Add("H", SyncModClients.GetCompatablityHash());

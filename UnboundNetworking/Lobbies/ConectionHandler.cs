@@ -67,7 +67,7 @@ namespace UnboundLib.Networking.Lobbies {
             if(!PhotonNetwork.IsConnectedAndReady) {
                 PhotonNetwork.LocalPlayer.NickName = SteamFriends.GetPersonaName();
                 PhotonNetwork.ConnectUsingSettings();
-                PhotonNetwork.AuthValues = new AuthenticationValues($"Steam={SteamUser.GetSTeamID().m_STeamID}");
+                PhotonNetwork.AuthValues = new AuthenticationValues($"Steam={SteamUser.GetSteamID().m_STeamID}");
                 if(region != "") {
                     PhotonNetwork.ConnectToRegion(region);
                 } else {
