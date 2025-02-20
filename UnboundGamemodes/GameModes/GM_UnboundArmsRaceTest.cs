@@ -13,6 +13,7 @@ using UnityEngine;
 using Unbound.Core.Extensions;
 using Unbound.Core;
 using UnboundLib.Networking.Lobbies;
+using Unbound.Gamemodes.UI;
 
 namespace Unbound.Gamemodes.GameModes {
     public class GM_UnboundArmsRaceTest: MonoBehaviour {
@@ -251,14 +252,14 @@ namespace Unbound.Gamemodes.GameModes {
 
         private IEnumerator GameOverTransition(int winningTeamID) {
             UIHandler.instance.ShowRoundCounterSmall(this.p1Rounds, this.p2Rounds, this.p1Points, this.p2Points);
-            UIHandler.instance.DisplayScreenText(PlayerManager.instance.GetColorFromTeam(winningTeamID).winText, "VICTORY!", 1f);
+            UIHandler.instance.DisplayScreenText(PlayerManager.instance.GetColorFromTeam(winningTeamID).winText, LocalizedStrings.VictoryText, 1f);
             yield return new WaitForSecondsRealtime(2f);
             this.GameOverContinue(winningTeamID);
             yield break;
         }
 
         private void GameOverRematch(int winningTeamID) {
-            UIHandler.instance.DisplayScreenTextLoop(PlayerManager.instance.GetColorFromTeam(winningTeamID).winText, "REMATCH?");
+            UIHandler.instance.DisplayScreenTextLoop(PlayerManager.instance.GetColorFromTeam(winningTeamID).winText, LocalizedStrings.RematchText);
             UIHandler.instance.InvokeMethod("DisplayYesNoLoop", PlayerManager.instance.InvokeMethod<Player>("GetFirstPlayerInTeam", winningTeamID), new Action<PopUpHandler.YesNo>(this.GetRematchYesNo));
             MapManager.instance.LoadNextLevel(false, false);
         }
@@ -279,7 +280,7 @@ namespace Unbound.Gamemodes.GameModes {
         private IEnumerator IDoRematch() {
             if(!PhotonNetwork.OfflineMode) {
                 base.GetComponent<PhotonView>().RPC("RPCA_PlayAgain", RpcTarget.Others, Array.Empty<object>());
-                UIHandler.instance.DisplayScreenTextLoop("WAITING");
+                UIHandler.instance.DisplayScreenTextLoop(LocalizedStrings.WaitingText);
                 float c = 0f;
                 while(this.waitingForOtherPlayer) {
                     c += Time.unscaledDeltaTime;
@@ -312,7 +313,7 @@ namespace Unbound.Gamemodes.GameModes {
         }
 
         private void GameOverContinue(int winningTeamID) {
-            UIHandler.instance.DisplayScreenTextLoop(PlayerManager.instance.GetColorFromTeam(winningTeamID).winText, "CONTINUE?");
+            UIHandler.instance.DisplayScreenTextLoop(PlayerManager.instance.GetColorFromTeam(winningTeamID).winText, LocalizedStrings.ContinueText);
             UIHandler.instance.InvokeMethod("DisplayYesNoLoop",PlayerManager.instance.InvokeMethod<Player>("GetFirstPlayerInTeam",winningTeamID), new Action<PopUpHandler.YesNo>(this.GetContinueYesNo));
             MapManager.instance.LoadNextLevel(false, false);
         }

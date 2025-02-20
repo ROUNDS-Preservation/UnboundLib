@@ -25,7 +25,7 @@ namespace UnboundLib.Networking {
 
         internal static List<Action> handShakeActions = new List<Action>();
 
-        public const int MaxPlayers = 16; //gonna try making this 32 or 64 at someponit.
+        public const int MaxPlayers = 16; //gonna try making this 32 or 64 at some point.
 
         public const int MinPlayers = 2;
 

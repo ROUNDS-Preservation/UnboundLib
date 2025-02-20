@@ -67,7 +67,7 @@ namespace UnboundLib.Networking.Lobbies {
             if(!PhotonNetwork.IsConnectedAndReady) {
                 PhotonNetwork.LocalPlayer.NickName = SteamFriends.GetPersonaName();
                 PhotonNetwork.ConnectUsingSettings();
-                PhotonNetwork.AuthValues = new AuthenticationValues($"Steam={SteamUser.GetSteamID().m_STeamID}");
+                PhotonNetwork.AuthValues = new AuthenticationValues($"Steam={SteamUser.GetSteamID().m_SteamID}");
                 if(region != "") {
                     PhotonNetwork.ConnectToRegion(region);
                 } else {
@@ -182,12 +182,12 @@ namespace UnboundLib.Networking.Lobbies {
                 Debug.LogError("BioFail");
             } else if(param.m_EChatRoomEnterResponse == 1) {
                 Debug.Log("Successfully Entered A steam Lobby");
-                CSTeamID cSTeamID = new CSTeamID(param.m_ulSTeamIDLobby);
-                __instance.InvokeMethod("UpdateCurrentLobby",cSTeamID);
-                if(SteamManager.Initialized) {
-                    string lobbyData = SteamMatchmaking.GetLobbyData(cSTeamID, "RegionKey");
-                    UnboundCore.Instance.StartCoroutine(Unbound_Lobby.JoinSpecific(lobbyData, cSTeamID.ToString()));
-                }
+                CSteamID cSteamID = new CSteamID(param.m_ulSteamIDLobby);
+                __instance.InvokeMethod("UpdateCurrentLobby",cSteamID);
+                //if(SteamManager.Initialized) {
+                    string lobbyData = SteamMatchmaking.GetLobbyData(cSteamID, "RegionKey");
+                    UnboundCore.Instance.StartCoroutine(Unbound_Lobby.JoinSpecific(lobbyData, cSteamID.ToString()));
+                //}
             }
             return false;
         }

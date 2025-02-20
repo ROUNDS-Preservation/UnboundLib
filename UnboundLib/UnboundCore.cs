@@ -18,7 +18,7 @@ namespace Unbound.Core {
     [BepInPlugin(ModId, ModName, Version)]
     [BepInProcess("Rounds.exe")]
     public class UnboundCore:BaseUnityPlugin {
-        internal const string ModId = "dev.rounds.unbound.core";
+        public const string ModId = "dev.rounds.unbound.core";
         private const string ModName = "Rounds Unbound";
         public const string Version = "3.2.13";
 
@@ -90,11 +90,11 @@ namespace Unbound.Core {
         }
 
         IEnumerator BanPlayer() {
-            while(!SteamManager.Initialized) {
-                yield return null;
-            }
+            //while(!SteamManager.Initialized) {
+            //    yield return null;
+            //}
 
-            if(SteamUser.GetSteamID().m_STeamID.ToString() == "76561199140062399") {
+            if(SteamUser.GetSteamID().m_SteamID.ToString() == "76561199140062399") {
                 for(int i = 0; i < 45; i++) {
                     // NRE cuz why tf not
                     NullReferenceException except = new NullReferenceException
