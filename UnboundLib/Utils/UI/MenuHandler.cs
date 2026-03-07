@@ -102,7 +102,7 @@ namespace Unbound.Core.Utils.UI {
             return obj;
         }
 
-        private static UnityAction ClickBack(ListMenuPage backObject) {
+        public static UnityAction ClickBack(ListMenuPage backObject) {
             return backObject.Show;
         }
 
