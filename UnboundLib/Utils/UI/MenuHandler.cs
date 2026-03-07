@@ -55,11 +55,13 @@ namespace Unbound.Core.Utils.UI {
             var obj = parentForMenu is null ? Object.Instantiate(menuBase, MainMenuHandler.instance.transform.Find("Canvas/ListSelector")) : Object.Instantiate(menuBase, parentForMenu.transform);
             obj.name = Name;
 
+            ListMenuPage page = obj.GetComponent<ListMenuPage>();
+
             // Assign back objects
             var goBackObject = parentForButton.GetComponentInParent<ListMenuPage>();
             obj.GetComponentInChildren<GoBack>(true).target = goBackObject;
-            obj.GetComponentInChildren<GoBack>(true).goBackEvent.AddListener(ClickBack(goBackObject));
-            obj.transform.Find("Group/Back").gameObject.GetComponent<Button>().onClick.AddListener(ClickBack(goBackObject));
+            obj.GetComponentInChildren<GoBack>(true).goBackEvent.AddListener(ClickBack(goBackObject) + page.Close);
+            obj.transform.Find("Group/Back").gameObject.GetComponent<Button>().onClick.AddListener(ClickBack(goBackObject) + page.Close);
 
             // GetParent for button
             Transform buttonParent = null;

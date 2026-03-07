@@ -60,7 +60,7 @@ namespace Unbound.Core.Utils {
             // Sort some of the default levels to a separate category
             foreach(var level in levels.Values) {
                 if(level.name.Contains("Phys") || level.name.Contains("Destructible") || level.name.Contains("Grape") || level.name.Contains("Serendipity") || level.name.Contains("Jumbo")) {
-                    level.category = "Default physics";
+                    level.category = "Physics";
                 }
             }
 

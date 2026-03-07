@@ -10,7 +10,6 @@ namespace Unbound.Cards.Patches {
         [HarmonyPatch("Awake")]
         [HarmonyPrefix]
         internal static void MainMenuHandlerAwake() {
-            Debug.Log("0");
 
             Unbound.Core.UnboundCore.Instance.ExecuteAfterFrames(5, () => {
                 CardManager.RestoreCardToggles();

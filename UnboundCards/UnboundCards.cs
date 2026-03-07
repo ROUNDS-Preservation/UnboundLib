@@ -5,6 +5,7 @@ using Unbound.Core;
 using Unbound.Core.Utils.UI;
 using UnboundLib.Networking.Utils;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Unbound.Cards {
     [BepInDependency("dev.rounds.unbound.core")]
@@ -52,6 +53,9 @@ namespace Unbound.Cards {
                 () => {
                     Debug.Log("Toggle Cards");
                     ToggleCardsMenuHandler.SetActive(ToggleCardsMenuHandler.cardMenuCanvas.transform, true);
+                    foreach(Animator tabAnimator in ToggleCardsMenuHandler.categoryContent.GetComponentsInChildren<Animator>()) {
+                        tabAnimator.SetTrigger(ToggleCardsMenuHandler.scrollViews[tabAnimator.gameObject.GetComponentInParent<Button>().gameObject.name].gameObject.activeSelf.ToString());
+                    }
                 });
         }
 

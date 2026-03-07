@@ -10,6 +10,7 @@ using Unbound.Gamemodes.Utils;
 using UnboundLib.Networking;
 using UnboundLib.Networking.Utils;
 using UnityEngine;
+using UnityEngine.UI;
 using static UnboundLib.Networking.UnboundNetworking;
 using static UnboundLib.Networking.Utils.NetworkEventCallbacks;
 
@@ -58,6 +59,9 @@ namespace Unbound.Gamemodes {
                 () => {
                     Debug.Log("Toggle Levels");
                     ToggleLevelMenuHandler.instance.SetActive(true);
+                    foreach(Animator tabAnimator in ToggleLevelMenuHandler.categoryContent.GetComponentsInChildren<Animator>()) {
+                        tabAnimator.SetTrigger(ToggleLevelMenuHandler.ScrollViews[tabAnimator.gameObject.GetComponentInParent<Button>().gameObject.name].gameObject.activeSelf.ToString());
+                    }
                 });
         }
 
