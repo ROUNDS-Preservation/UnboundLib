@@ -88,15 +88,10 @@ namespace Unbound.Gamemodes {
                 // do not destroy local button since RWF relies on it
                 MainMenuHandler.instance.transform.Find("Canvas/ListSelector/Main/Group/Local").gameObject.SetActive(false);
 
-                var newVersusGo = MenuHandler.CreateButton("VERSUS", newLocalMenu, () => { characterSelectGo_.GetComponent<ListMenuPage>().Show(); newLocalMenu.GetComponent<ListMenuPage>().Hide(); SetGameMode(ArmsRaceID); });
+                var newVersusGo = MenuHandler.CreateButton("VERSUS", newLocalMenu, () => { ListMenu.instance.OpenPage(characterSelectGo_.GetComponent<ListMenuPage>()); SetGameMode(ArmsRaceID); });
                 newVersusGo.name = "Versus";
                 var newSandboxGo = MenuHandler.CreateButton("SANDBOX", newLocalMenu, () => { MainMenuHandler.instance.Close(); SetGameMode(SandBoxID); CurrentHandler.StartGame(); });
                 newSandboxGo.name = "Test";
-
-                // Fix the go back functionality of character select
-                characterSelectGo_.GetComponentInChildren<GoBack>(true).target = newLocalMenu.GetComponent<ListMenuPage>();
-                characterSelectGo_.GetComponentInChildren<GoBack>(true).goBackEvent.AddListener(MenuHandler.ClickBack(newLocalMenu.GetComponent<ListMenuPage>())
-                    + characterSelectGo_.GetComponent<ListMenuPage>().Close);
 
                 // Select the local button so selection doesn't look weird
                 UnboundCore.Instance.ExecuteAfterFrames(15, () => {

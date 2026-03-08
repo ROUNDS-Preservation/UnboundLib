@@ -55,13 +55,11 @@ namespace Unbound.Core.Utils.UI {
             var obj = parentForMenu is null ? Object.Instantiate(menuBase, MainMenuHandler.instance.transform.Find("Canvas/ListSelector")) : Object.Instantiate(menuBase, parentForMenu.transform);
             obj.name = Name;
 
-            ListMenuPage page = obj.GetComponent<ListMenuPage>();
-
             // Assign back objects
             var goBackObject = parentForButton.GetComponentInParent<ListMenuPage>();
             obj.GetComponentInChildren<GoBack>(true).target = goBackObject;
-            obj.GetComponentInChildren<GoBack>(true).goBackEvent.AddListener(ClickBack(goBackObject) + page.Close);
-            obj.transform.Find("Group/Back").gameObject.GetComponent<Button>().onClick.AddListener(ClickBack(goBackObject) + page.Close);
+            obj.GetComponentInChildren<GoBack>(true).goBackEvent.AddListener(ClickBack(goBackObject));
+            obj.transform.Find("Group/Back").gameObject.GetComponent<Button>().onClick.AddListener(ClickBack(goBackObject));
 
             // GetParent for button
             Transform buttonParent = null;
@@ -81,14 +79,12 @@ namespace Unbound.Core.Utils.UI {
             uGUI.fontSize = setFontSize ? size : 50;
             if(buttonAction == null) {
                 buttonAction = () => {
-                    obj.GetComponent<ListMenuPage>().Show();
-                    goBackObject.Hide();
+                    ListMenu.instance.OpenPage(obj.GetComponent<ListMenuPage>());
                     obj.GetComponentInChildren<ScrollRect>().verticalNormalizedPosition = 1;
                 };
             } else {
                 buttonAction += () => {
-                    obj.GetComponent<ListMenuPage>().Show();
-                    goBackObject.Hide();
+                    ListMenu.instance.OpenPage(obj.GetComponent<ListMenuPage>());
                     obj.GetComponentInChildren<ScrollRect>().verticalNormalizedPosition = 1;
                 };
             }
@@ -103,7 +99,7 @@ namespace Unbound.Core.Utils.UI {
         }
 
         public static UnityAction ClickBack(ListMenuPage backObject) {
-            return backObject.Show;
+            return ListMenu.instance.CloseTopPage;
         }
 
         // Creates a UI text
